@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  postservice.api:
+    image: postservice
+    build:
+      context: ./PostService.API
+      dockerfile: Dockerfile
+    ports:
+      - "6001:80"
+
+  commentservice.api:
+    image: commentservice
+    build:
+      context: ./CommentService.API
+      dockerfile: Dockerfile
+    ports:
+      - "6002:80"
+    depends_on:
+      - postservice.api
+    environment:
+      - PostServiceUrl=http://postservice.api
